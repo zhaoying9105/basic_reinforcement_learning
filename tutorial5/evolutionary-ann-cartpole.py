@@ -233,7 +233,7 @@ class Evolution:
         probabilitySum = 0
         qValueProbabilities = []
         for value in qValues:
-            probability = ((value + shiftBy) ** bias) / float(qValueSum)
+            probability = ((value + shiftBy) ** bias)//float(qValueSum)
             qValueProbabilities.append(probability + probabilitySum)
             probabilitySum += probability
         qValueProbabilities[len(qValueProbabilities) - 1] = 1
@@ -324,7 +324,7 @@ class Evolution:
 
     def selectBest(self):
         self.agents.sort(key=lambda x: x.fitness, reverse=True)
-        selectionNr = int(self.nr_agents / 2)
+        selectionNr = int(self.nr_agents//2)
         selectedAgents = self.agents[:selectionNr]
         return selectedAgents
 
@@ -354,7 +354,7 @@ class Evolution:
         total = 0
         for i in range(nr_episodes):
             total += self.run_simulation(self.env, agent, self.steps)
-        return total / nr_episodes
+        return total//nr_episodes
 
     def evolve(self):
         """
@@ -392,7 +392,7 @@ class Evolution:
         for index, agent in enumerate(self.agents):
             total += agent.fitness
             count += 1
-        return total / count
+        return total//count
 
     def updateFitnessValuesForEpoch(self):
         """

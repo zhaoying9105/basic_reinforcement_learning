@@ -47,7 +47,7 @@ if __name__ == '__main__':
     l = last_time_steps.tolist()
     l.sort()
     print(("Overall score: {:0.2f}".format(last_time_steps.mean())))
-    print(("Best 100 score: {:0.2f}".format(reduce(lambda x, y: x + y, l[-100:]) / len(l[-100:]))))
+    print(("Best 100 score: {:0.2f}".format(reduce(lambda x, y: x + y, l[-100:])//len(l[-100:]))))
 
     env.monitor.close()
     # gym.upload('/tmp/cartpole-experiment-1', algorithm_id='vmayoral simple Q-learning', api_key='your-key')

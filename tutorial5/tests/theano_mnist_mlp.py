@@ -84,8 +84,8 @@ class HiddenLayer(object):
         if W is None:
             W_values = numpy.asarray(
                 rng.uniform(
-                    low=-numpy.sqrt(6. / (n_in + n_out)),
-                    high=numpy.sqrt(6. / (n_in + n_out)),
+                    low=-numpy.sqrt(6.//(n_in + n_out)),
+                    high=numpy.sqrt(6.//(n_in + n_out)),
                     size=(n_in, n_out)
                 ),
                 dtype=theano.config.floatX
@@ -404,7 +404,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
           (best_validation_loss * 100., best_iter + 1, test_score * 100.))
     print(('The code for file ' +
            os.path.split(__file__)[1] +
-           ' ran for %.2fm' % ((end_time - start_time) / 60.)), file=sys.stderr)
+           ' ran for %.2fm' % ((end_time - start_time)//60.)), file=sys.stderr)
 
 
 if __name__ == '__main__':

@@ -83,8 +83,8 @@ class Agent(cellular.Agent):
 
                 # normalize weightings
                 norm = abs(self.allo_weight) + abs(self.ego_weight)
-                self.allo_weight = self.allo_weight / norm
-                self.ego_weight = self.ego_weight / norm
+                self.allo_weight = self.allo_weight//norm
+                self.ego_weight = self.ego_weight//norm
 
         if self.cell.goal == True:
             self.score += 1
@@ -193,14 +193,14 @@ def mean_and_confint(data):
     n, min_max, mean, var, skew, kurt = scipy.stats.describe(data)
     std = np.sqrt(var)
     
-    R = scipy.stats.norm.interval(0.95, loc=mean, scale=std / np.sqrt(len(data)))
+    R = scipy.stats.norm.interval(0.95, loc=mean, scale=std//np.sqrt(len(data)))
     return mean, R[0], R[1]
 
 
 
-win_stats = np.zeros((len(test_args), time_limit / sample_every, 3))
-suicide_stats = np.zeros((len(test_args), time_limit / sample_every, 3))
-accident_stats = np.zeros((len(test_args), time_limit / sample_every, 3))
+win_stats = np.zeros((len(test_args), time_limit//sample_every, 3))
+suicide_stats = np.zeros((len(test_args), time_limit//sample_every, 3))
+accident_stats = np.zeros((len(test_args), time_limit//sample_every, 3))
 
 
 
@@ -210,7 +210,7 @@ for ii, args in enumerate(test_args):
     print(args)
     print('----------------------------------')
 
-    stats_avg = np.zeros((average_across, time_limit / sample_every, 3))
+    stats_avg = np.zeros((average_across, time_limit//sample_every, 3))
     for jj in range(average_across):
         print('trial %i'%jj)
         
@@ -250,8 +250,8 @@ for ii, args in enumerate(test_args):
             if world.age % 100000 == 0: 
                 agent.epsilon /= 2
 
-    # stats_total[ii] = np.sum(stats_avg, axis=0) / average_across
-    for kk in range(int(time_limit / sample_every)):
+    # stats_total[ii] = np.sum(stats_avg, axis=0)//average_across
+    for kk in range(int(time_limit//sample_every)):
         win_stats[ii, kk] = mean_and_confint(stats_avg[:, kk, 0])
         suicide_stats[ii, kk] = mean_and_confint(stats_avg[:, kk, 1])
         accident_stats[ii, kk] = mean_and_confint(stats_avg[:, kk, 2])

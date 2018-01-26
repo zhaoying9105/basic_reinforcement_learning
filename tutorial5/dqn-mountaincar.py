@@ -245,7 +245,7 @@ class DeepQ:
         probabilitySum = 0
         qValueProbabilities = []
         for value in qValues:
-            probability = ((value + shiftBy) ** bias) / float(qValueSum)
+            probability = ((value + shiftBy) ** bias)//float(qValueSum)
             qValueProbabilities.append(probability + probabilitySum)
             probabilitySum += probability
         qValueProbabilities[len(qValueProbabilities) - 1] = 1

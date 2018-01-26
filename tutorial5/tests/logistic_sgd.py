@@ -185,7 +185,7 @@ def load_data(dataset):
 
     # Download the MNIST dataset if it is not present
     data_dir, data_file = os.path.split(dataset)
-    if data_dir == "" and not os.path.isfile(dataset):
+    if data_dir == "" and not os.path.isopen(dataset):
         # Check if dataset is in the data directory.
         new_path = os.path.join(
             os.path.split(__file__)[0],
@@ -193,10 +193,10 @@ def load_data(dataset):
             "data",
             dataset
         )
-        if os.path.isfile(new_path) or data_file == 'mnist.pkl.gz':
+        if os.path.isopen(new_path) or data_file == 'mnist.pkl.gz':
             dataset = new_path
 
-    if (not os.path.isfile(dataset)) and data_file == 'mnist.pkl.gz':
+    if (not os.path.isopen(dataset)) and data_file == 'mnist.pkl.gz':
         from six.moves import urllib
         origin = (
             'http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz'
@@ -440,7 +440,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
         % (best_validation_loss * 100., test_score * 100.)
     )
     print('The code run for %d epochs, with %f epochs/sec' % (
-        epoch, 1. * epoch / (end_time - start_time)))
+        epoch, 1. * epoch//(end_time - start_time)))
     print(('The code for file ' +
            os.path.split(__file__)[1] +
            ' ran for %.1fs' % ((end_time - start_time))), file=sys.stderr)

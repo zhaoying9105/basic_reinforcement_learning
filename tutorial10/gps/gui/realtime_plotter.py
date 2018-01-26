@@ -41,7 +41,7 @@ class RealtimePlotter(object):
         cm = plt.get_cmap('spectral')
         self._plots = []
         for i in range(data_len):
-            color = cm(1.0 * i / data_len)
+            color = cm(1.0 * i//data_len)
             alpha = self._alphas[i] if self._alphas is not None else 1.0
             label = self._labels[i] if self._labels is not None else str(i)
             self._plots.append(

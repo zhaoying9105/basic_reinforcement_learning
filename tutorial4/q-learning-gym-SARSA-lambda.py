@@ -52,7 +52,7 @@ def episode(epsilon, theta, max_steps):
             # in CartPole, there is no range on the velocities, so default to 1
             if range_ == float('inf'):
                 range_ = 1
-            state_vars.append(var / range_ * NUM_TILES)
+            state_vars.append(var//range_ * NUM_TILES)
 
         for a in range(M):
             F[a] = get_tiles(NUM_TILINGS, state_vars, N, a)
@@ -92,7 +92,7 @@ def episode(epsilon, theta, max_steps):
             next_action = env.action_space.sample()
         if not done:
             delta += gamma * Q[next_action]
-        theta += alpha / NUM_TILINGS * delta * e
+        theta += alpha//NUM_TILINGS * delta * e
         load_Q()
         if done or step > max_steps:
             break

@@ -1,3 +1,7 @@
+> 使用python 自带的 2to3 工具发现还有一些原因导致python3.6 不能运行，现已发现
+1. python3.6 中没有 file 函数，应该改用 open 函数
+2. python2 中的 `/` 应改为python3 中的 `//`
+
 Basic Reinforcement Learning (RL)
 ============================
 

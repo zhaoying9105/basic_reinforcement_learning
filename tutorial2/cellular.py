@@ -45,7 +45,7 @@ class Agent:
         self.turn(1)
 
     def turnAround(self):
-        self.turn(self.world.directions / 2)
+        self.turn(self.world.directions//2)
 
     # return True if successfully moved in that direction
     def goInDirection(self, dir):
@@ -99,7 +99,7 @@ class World:
         self.display = makeDisplay(self)
         self.directions = directions
         if filename is not None:
-            data = file(filename).readlines()
+            data = open(filename).readlines()
             if height is None:
                 height = len(data)
             if width is None:
@@ -148,7 +148,7 @@ class World:
         if not hasattr(self.Cell, 'save'):
             return
         if isinstance(f, type('')):
-            f = file(f, 'w')
+            f = open(f, 'w')
 
         total = ''
         for j in range(self.height):
@@ -166,7 +166,7 @@ class World:
         if not hasattr(self.Cell, 'load'):
             return
         if isinstance(f, type('')):
-            f = file(f)
+            f = open(f)
         lines = f.readlines()
         lines = [x.rstrip() for x in lines]
         fh = len(lines)
@@ -175,12 +175,12 @@ class World:
             fh = self.height
             starty = 0
         else:
-            starty = (self.height - fh) / 2
+            starty = (self.height - fh)//2
         if fw > self.width:
             fw = self.width
             startx = 0
         else:
-            startx = (self.width - fw) / 2
+            startx = (self.width - fw)//2
 
         self.reset()
         for j in range(fh):
@@ -337,8 +337,8 @@ class TkinterDisplay:
     def onConfigure(self, event):
         if event.width != self.frameWidth or event.height != self.frameHeight:
             oldSize = self.size
-            scalew = event.width / self.world.width
-            scaleh = event.height / self.world.height
+            scalew = event.width//self.world.width
+            scaleh = event.height//self.world.height
             self.size = min(scalew, scaleh)
             if self.size < 1:
                 self.size = 1
@@ -382,16 +382,16 @@ class TkinterDisplay:
         iw = self.world.width * self.size
         ih = self.world.height * self.size
         if hexgrid:
-            iw += self.size / 2
+            iw += self.size//2
 
-        f = file('temp.ppm', 'wb')
+        f = open('temp.ppm', 'wb')
         f.write('P6\n%d %d\n255\n' % (iw, ih))
 
         odd = False
         for row in self.world.grid:
             line = cStringIO.StringIO()
             if hexgrid and odd:
-                line.write(self.getBackground() * (self.size / 2))
+                line.write(self.getBackground() * (self.size//2))
             for cell in row:
                 if len(cell.agents) > 0:
                     c = self.getDataColour(cell.agents[-1])
@@ -400,7 +400,7 @@ class TkinterDisplay:
 
                 line.write(c * self.size)
             if hexgrid and not odd:
-                line.write(self.getBackground() * (self.size / 2))
+                line.write(self.getBackground() * (self.size//2))
             odd = not odd
 
             f.write(line.getvalue() * self.size)
@@ -417,7 +417,7 @@ class TkinterDisplay:
         sx = x * self.size
         sy = y * self.size
         if y % 2 == 1 and self.world.directions == 6:
-            sx += self.size / 2
+            sx += self.size//2
 
         cell = self.world.grid[y][x]
         if len(cell.agents) > 0:
@@ -480,7 +480,7 @@ class PygameDisplay:
         w = self.world.width * size
         h = self.world.height * size
         if self.world.directions == 6:
-            w += size / 2
+            w += size//2
         if PygameDisplay.screen is None or PygameDisplay.screen.get_width() != w or PygameDisplay.screen.get_height() != h:
             PygameDisplay.screen = pygame.display.set_mode(
                 (w, h), pygame.RESIZABLE, 32)
@@ -494,15 +494,15 @@ class PygameDisplay:
         self.screen.fill(self.defaultColour)
         hexgrid = self.world.directions == 6
         self.offsety = (
-            self.screen.get_height() - self.world.height * self.size) / 2
+            self.screen.get_height() - self.world.height * self.size)//2
         self.offsetx = (
-            self.screen.get_width() - self.world.width * self.size) / 2
+            self.screen.get_width() - self.world.width * self.size)//2
         sy = self.offsety
         odd = False
         for row in self.world.grid:
             sx = self.offsetx
             if hexgrid and odd:
-                sx += self.size / 2
+                sx += self.size//2
             for cell in row:
                 if len(cell.agents) > 0:
                     c = self.getColour(cell.agents[0])
@@ -523,7 +523,7 @@ class PygameDisplay:
         sx = x * self.size + self.offsetx
         sy = y * self.size + self.offsety
         if y % 2 == 1 and self.world.directions == 6:
-            sx += self.size / 2
+            sx += self.size//2
 
         cell = self.world.grid[y][x]
         if len(cell.agents) > 0:
@@ -583,8 +583,8 @@ class PygameDisplay:
             return
         pygame.display.set_mode(event.size, pygame.RESIZABLE, 32)
         oldSize = self.size
-        scalew = event.size[0] / self.world.width
-        scaleh = event.size[1] / self.world.height
+        scalew = event.size[0]//self.world.width
+        scaleh = event.size[1]//self.world.height
         self.size = min(scalew, scaleh)
         if self.size < 1:
             self.size = 1

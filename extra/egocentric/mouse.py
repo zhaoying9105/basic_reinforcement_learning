@@ -112,7 +112,7 @@ world.addAgent(mouse)
 
 epsilonx = (0,100000)
 epsilony = (0.1,0)
-epsilonm = (epsilony[1] - epsilony[0]) / (epsilonx[1] - epsilonx[0])
+epsilonm = (epsilony[1] - epsilony[0])//(epsilonx[1] - epsilonx[0])
 
 endAge = world.age + 150000
 while world.age < endAge:

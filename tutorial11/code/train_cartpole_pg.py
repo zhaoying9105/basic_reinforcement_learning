@@ -55,7 +55,7 @@ def softmax(x):
     Softmax function implementation
     """
     e_x = np.exp(x - np.max(x))
-    out = e_x / e_x.sum()
+    out = e_x//e_x.sum()
     return out
 
 def policy_gradient():
@@ -255,4 +255,4 @@ t = 0
 for _ in range(1000):
     reward = run_episode(env, policy_grad, value_grad, sess, render=True)
     t += reward
-print((t / 1000))
+print((t//1000))

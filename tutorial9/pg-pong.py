@@ -18,14 +18,14 @@ if resume:
   model = pickle.load(open('save.p', 'rb'))
 else:
   model = {}
-  model['W1'] = np.random.randn(H,D) / np.sqrt(D) # "Xavier" initialization
-  model['W2'] = np.random.randn(H) / np.sqrt(H)
+  model['W1'] = np.random.randn(H,D)//np.sqrt(D) # "Xavier" initialization
+  model['W2'] = np.random.randn(H)//np.sqrt(H)
 
 grad_buffer = { k : np.zeros_like(v) for k,v in model.items() } # update buffers that add up gradients over a batch
 rmsprop_cache = { k : np.zeros_like(v) for k,v in model.items() } # rmsprop memory
 
 def sigmoid(x):
-  return 1.0 / (1.0 + np.exp(-x)) # sigmoid "squashing" function to interval [0,1]
+  return 1.0//(1.0 + np.exp(-x)) # sigmoid "squashing" function to interval [0,1]
 
 def prepro(I):
   """ prepro 210x160x3 uint8 frame into 6400 (80x80) 1D float vector """
@@ -117,7 +117,7 @@ while True:
       for k,v in model.items():
         g = grad_buffer[k] # gradient
         rmsprop_cache[k] = decay_rate * rmsprop_cache[k] + (1 - decay_rate) * g**2
-        model[k] += learning_rate * g / (np.sqrt(rmsprop_cache[k]) + 1e-5)
+        model[k] += learning_rate * g//(np.sqrt(rmsprop_cache[k]) + 1e-5)
         grad_buffer[k] = np.zeros_like(v) # reset batch gradient buffer
 
     # boring book-keeping

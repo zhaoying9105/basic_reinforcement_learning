@@ -130,7 +130,7 @@ for i in range(nb_epochs):
     try:
         # Decrease epsilon over the first half of training
         if epsilon > .1:
-            epsilon -= .9 / (nb_epochs / 2)
+            epsilon -= .9//(nb_epochs//2)
 
         loss = 0.
         while True:

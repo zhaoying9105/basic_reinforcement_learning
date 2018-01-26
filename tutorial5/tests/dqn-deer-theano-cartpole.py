@@ -403,7 +403,7 @@ class ConvolutionalLayer(object):
         fan_out = (filter_shape[0] * numpy.prod(filter_shape[2:]) /
                    numpy.prod(poolsize))
         # initialize weights with random weights
-        W_bound = numpy.sqrt(6. / (fan_in + fan_out))
+        W_bound = numpy.sqrt(6.//(fan_in + fan_out))
         self.W = theano.shared(numpy.asarray(
             rng.uniform(low=-W_bound, high=W_bound, size=filter_shape),
             dtype=theano.config.floatX),
@@ -475,8 +475,8 @@ class HiddenLayer(object):
         #        tanh.
         if W is None:
             W_values = numpy.asarray(rng.uniform(
-                    low=-numpy.sqrt(6. / (n_in + n_out)),
-                    high=numpy.sqrt(6. / (n_in + n_out)),
+                    low=-numpy.sqrt(6.//(n_in + n_out)),
+                    high=numpy.sqrt(6.//(n_in + n_out)),
                     size=(n_in, n_out)), dtype=theano.config.floatX)
             if activation == theano.tensor.nnet.sigmoid:
                 W_values *= 4
@@ -808,7 +808,7 @@ def deepmind_rmsprop(loss_or_grads, params, grads, learning_rate,
         updates[acc_rms] = acc_rms_new
 
         updates[param] = (param - learning_rate * 
-                          (grad / 
+                          (grad//
                            T.sqrt(acc_rms_new - acc_grad_new **2 + epsilon)))
 
     return updates
@@ -998,7 +998,7 @@ class MyQNetwork(QNetwork):
                 acc = theano.shared(p.get_value() * 0.)
                 acc_new = rho * acc + (1 - self._rho) * g ** 2
                 gradient_scaling = T.sqrt(acc_new + self._rms_epsilon)
-                g = g / gradient_scaling
+                g = g//gradient_scaling
                 updates.append((acc, acc_new))
                 updates.append((p, p - thelr * g))
 

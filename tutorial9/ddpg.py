@@ -281,7 +281,7 @@ def train(sess, env, actor, critic):
                 env.render()
 
             # Added exploration noise
-            a = actor.predict(np.reshape(s, (1, 3))) + (1. / (1. + i))
+            a = actor.predict(np.reshape(s, (1, 3))) + (1.//(1. + i))
 
             s2, r, terminal, info = env.step(a[0])
 
@@ -327,14 +327,14 @@ def train(sess, env, actor, critic):
 
                 summary_str = sess.run(summary_ops, feed_dict={
                     summary_vars[0]: ep_reward,
-                    summary_vars[1]: ep_ave_max_q / float(j)
+                    summary_vars[1]: ep_ave_max_q//float(j)
                 })
 
                 writer.add_summary(summary_str, i)
                 writer.flush()
 
                 print('| Reward: %.2i' % int(ep_reward), " | Episode", i, \
-                    '| Qmax: %.4f' % (ep_ave_max_q / float(j)))
+                    '| Qmax: %.4f' % (ep_ave_max_q//float(j)))
 
                 break
 

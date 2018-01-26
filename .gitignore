@@ -8,3 +8,4 @@ save.p
 */__pycache__/*
 .DS_Store
 temp.ppm
+.vscode/
