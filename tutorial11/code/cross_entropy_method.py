@@ -57,7 +57,7 @@ while i < n_iter:
         #pick p vectors with highest reward
         top_vectors=wvector_array[rankings,:]
         top_vectors=top_vectors[-p:,:]
-        print("top vectors shpae:{}".format(top_vectors.shape))
+        print(("top vectors shpae:{}".format(top_vectors.shape)))
         #fit new gaussian from which to sample policy
         for q in range(top_vectors.shape[1]):
                 mu[q]=top_vectors[:,q].mean()
@@ -65,8 +65,8 @@ while i < n_iter:
 
         running_reward=0.99*running_reward + 0.01*reward_sums.mean()
         print("#############################################################################")
-        print("iteration:{},mean reward:{}, running reward mean:{} \n"
+        print(("iteration:{},mean reward:{}, running reward mean:{} \n"
                 " reward range:{} to {},".format(
                     i, reward_sums.mean(),running_reward,reward_sums.min(),reward_sums.max(),
-                    ))
+                    )))
         i+=1

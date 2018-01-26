@@ -56,7 +56,7 @@ class Mouse(cellular.Agent):
 
     def __init__(self):
         self.ai = None
-        self.ai = qlearn.QLearn(actions=range(directions),
+        self.ai = qlearn.QLearn(actions=list(range(directions)),
                                 alpha=0.1, gamma=0.9, epsilon=0.1)
         self.eaten = 0
         self.fed = 0
@@ -124,8 +124,8 @@ while world.age < endAge:
                             epsilonm*(world.age - epsilonx[0]) + epsilony[0])
 
     if world.age % 10000 == 0:
-        print "{:d}, e: {:0.2f}, W: {:d}, L: {:d}"\
-            .format(world.age, mouse.ai.epsilon, mouse.fed, mouse.eaten)
+        print("{:d}, e: {:0.2f}, W: {:d}, L: {:d}"\
+            .format(world.age, mouse.ai.epsilon, mouse.fed, mouse.eaten))
         mouse.eaten = 0
         mouse.fed = 0
 

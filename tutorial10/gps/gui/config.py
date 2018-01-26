@@ -36,7 +36,7 @@ keyboard_bindings = {
     'oti'  : 'p',   # overlay target image
 }
 inverted_keyboard_bindings = {value: key
-                              for key, value in keyboard_bindings.items()}
+                              for key, value in list(keyboard_bindings.items())}
 #                              for key, value in keyboard_bindings.iteritems()}
 
 # Mappings from actions to their corresponding PS3 controller bindings.
@@ -68,7 +68,7 @@ ps3_bindings = {
     'oti'  : (PS3_BUTTON['cross_down']  ,),
 }
 #inverted_ps3_bindings = {value: key for key, value in ps3_bindings.iteritems()}
-inverted_ps3_bindings = {value: key for key, value in ps3_bindings.items()}
+inverted_ps3_bindings = {value: key for key, value in list(ps3_bindings.items())}
 
 permuted_inverted_ps3_bindings = {}
 #for key, value in list(inverted_ps3_bindings.iteritems()):
@@ -124,14 +124,12 @@ def generate_experiment_info(config):
         algorithm_cost_type = algorithm['cost'][0]['type'].__name__
         if (algorithm_cost_type) == 'CostSum':
             algorithm_cost_type += '(%s)' % ', '.join(
-                    map(lambda cost: cost['type'].__name__,
-                        algorithm['cost'][0]['costs']))
+                    [cost['type'].__name__ for cost in algorithm['cost'][0]['costs']])
     else:
         algorithm_cost_type = algorithm['cost']['type'].__name__
         if (algorithm_cost_type) == 'CostSum':
             algorithm_cost_type += '(%s)' % ', '.join(
-                    map(lambda cost: cost['type'].__name__,
-                        algorithm['cost']['costs']))
+                    [cost['type'].__name__ for cost in algorithm['cost']['costs']])
 
     if 'dynamics' in algorithm:        
         alg_dyn = str(algorithm['dynamics']['type'].__name__)

@@ -98,11 +98,11 @@ model.summary()
 # model.load_weights('model.h5')
 
 exp_replay = experience_replay(batch_size)
-exp_replay.next()  # Start experience-replay coroutine
+next(exp_replay)  # Start experience-replay coroutine
 
-for i in xrange(nb_epochs):
+for i in range(nb_epochs):
     ep = episode()
-    S, reward = ep.next()  # Start coroutine of single entire episode
+    S, reward = next(ep)  # Start coroutine of single entire episode
     loss = 0.
     try:
         while True:
@@ -138,14 +138,14 @@ for i in xrange(nb_epochs):
         pass
     
     # if (i + 1) % 100 == 0:
-    print 'Epoch %i, loss: %.6f' % (i + 1, loss)
+    print('Epoch %i, loss: %.6f' % (i + 1, loss))
 
 #################
 # SAVE THE MODEL
 #################
 # Save trained model weights and architecture, this will be used by the visualization code
 model_name = "model.h5"
-print("Saving the model to "+model_name)
+print(("Saving the model to "+model_name))
 json_string = model.to_json()
 open('model.json', 'w').write(json_string)
 model.save_weights(model_name)    
@@ -154,11 +154,11 @@ model.save_weights(model_name)
 # TEST
 #################
 img_saver = save_img()
-img_saver.next()
+next(img_saver)
 
-for _ in xrange(10):
+for _ in range(10):
     g = episode()
-    S, _ = g.next()
+    S, _ = next(g)
     img_saver.send(S)
     try:
         while True:
@@ -201,9 +201,9 @@ if __name__ == '__main__':
 
     actions = [action_attack, action_left, action_right]
 
-    for i_episode in xrange(30):
+    for i_episode in range(30):
         observation = env.reset()
-        for t in xrange(max_number_of_steps):	    	
+        for t in range(max_number_of_steps):	    	
             env.render()
             # Execute the action and get feedback
             observation, reward, done, info = env.step(env.action_space.sample())

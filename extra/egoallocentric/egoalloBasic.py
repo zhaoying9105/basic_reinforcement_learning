@@ -38,7 +38,7 @@ class Cell(cellular.Cell):
 class Agent(cellular.Agent):
     def __init__(self, allo_weight=.5, ego_weight=.5, weight_learning=True):
 
-        self.actions = range(directions)
+        self.actions = list(range(directions))
         self.epsilon = .1
         self.eta = 5e-6
         self.lastAction = None
@@ -205,21 +205,21 @@ accident_stats = np.zeros((len(test_args), time_limit / sample_every, 3))
 
 
 for ii, args in enumerate(test_args): 
-    print '\n----------------------------------'
-    print 'testing argument set %i'%ii
-    print args
-    print '----------------------------------'
+    print('\n----------------------------------')
+    print('testing argument set %i'%ii)
+    print(args)
+    print('----------------------------------')
 
     stats_avg = np.zeros((average_across, time_limit / sample_every, 3))
     for jj in range(average_across):
-        print 'trial %i'%jj
+        print('trial %i'%jj)
         
         index = 0
 
         world = cellular.World(Cell, directions=directions, filename='worlds/barrier3.txt')
 
         if startCell is None:
-            print "You must indicate where the agent starts by putting a 'S' in the map file"
+            print("You must indicate where the agent starts by putting a 'S' in the map file")
             sys.exit()
         agent = Agent(**args)
         world.addAgent(agent, cell=startCell)
@@ -227,7 +227,7 @@ for ii, args in enumerate(test_args):
         pretraining = 0
         for i in range(pretraining):
             if i % 1000 == 0:
-                print i, agent.score
+                print(i, agent.score)
                 agent.score = 0
             world.update()
 
@@ -239,10 +239,10 @@ for ii, args in enumerate(test_args):
             world.update()
 
             if world.age % sample_every == 0:
-                print "{:d}, W: {:d}, L: {:d}, A: {:d}"\
-                    .format(world.age, agent.score, agent.intentional_deaths, agent.unintentional_deaths)
+                print("{:d}, W: {:d}, L: {:d}, A: {:d}"\
+                    .format(world.age, agent.score, agent.intentional_deaths, agent.unintentional_deaths))
                 stats_avg[jj, index] = np.array([agent.score, agent.intentional_deaths, agent.unintentional_deaths])
-                print "allo: %.3f, ego: %.3f, epsilon: %.3f"%(agent.allo_weight, agent.ego_weight, agent.epsilon)
+                print("allo: %.3f, ego: %.3f, epsilon: %.3f"%(agent.allo_weight, agent.ego_weight, agent.epsilon))
                 agent.score = 0
                 agent.intentional_deaths = 0
                 agent.unintentional_deaths = 0
@@ -257,7 +257,7 @@ for ii, args in enumerate(test_args):
         accident_stats[ii, kk] = mean_and_confint(stats_avg[:, kk, 2])
 
 import matplotlib.pyplot as plt
-x = range(0, int(time_limit), int(sample_every))
+x = list(range(0, int(time_limit), int(sample_every)))
 
 for ii in range(len(test_args)):
     plt.figure()

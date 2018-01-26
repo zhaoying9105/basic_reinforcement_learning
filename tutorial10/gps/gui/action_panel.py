@@ -61,7 +61,7 @@ class ActionPanel:
         # Read keyboard_bindings and ps3_bindings from config
         self._actions = {action.key: action for action in actions_arr}
         #for key, action in self._actions.iteritems():
-        for key, action in self._actions.items():
+        for key, action in list(self._actions.items()):
             if key in config['keyboard_bindings']:
                 action.kb = config['keyboard_bindings'][key]
             if key in config['ps3_bindings']:
@@ -77,7 +77,7 @@ class ActionPanel:
     def _initialize_buttons(self):
         self._buttons = {}
         #for key, action in self._actions.iteritems():
-        for key, action in self._actions.items():
+        for key, action in list(self._actions.items()):
             if action.axis_pos is None:
                 continue
             

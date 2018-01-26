@@ -37,7 +37,7 @@ class Cell(cellular.Cell):
 class Agent(cellular.Agent):
     def __init__(self):
         self.ai = sarsa.Sarsa(
-            actions=range(directions), epsilon=0.1, alpha=0.1, gamma=0.9)
+            actions=list(range(directions)), epsilon=0.1, alpha=0.1, gamma=0.9)
         self.lastAction = None
         self.score = 0
         self.deads = 0
@@ -85,7 +85,7 @@ directions = 4
 world = cellular.World(Cell, directions=directions, filename='../worlds/cliff.txt')
 
 if startCell is None:
-    print "You must indicate where the agent starts by putting a 'S' in the map file"
+    print("You must indicate where the agent starts by putting a 'S' in the map file")
     sys.exit()
 agent = Agent()
 world.addAgent(agent, cell=startCell)
@@ -93,7 +93,7 @@ world.addAgent(agent, cell=startCell)
 pretraining = 100000
 for i in range(pretraining):
     if i % 1000 == 0:
-        print i, agent.score, agent.deads
+        print(i, agent.score, agent.deads)
         agent.score = 0
         agent.deads = 0
     world.update()

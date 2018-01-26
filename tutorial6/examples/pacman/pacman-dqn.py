@@ -40,9 +40,9 @@ class Agent:
         self.model = Model(S, V)
         try:
             self.model.load_weights('{}.h5'.format(self.save_name))
-            print "loading from {}.h5".format(self.save_name)
+            print("loading from {}.h5".format(self.save_name))
         except:
-            print "Training a new model"
+            print("Training a new model")
 
 
     def build_functions(self):
@@ -100,7 +100,7 @@ class Agent:
         A = numpy.zeros((self.mbsz, 1), dtype=numpy.int32)
         R = numpy.zeros((self.mbsz, 1), dtype=numpy.float32)
         T = numpy.zeros((self.mbsz, 1), dtype=numpy.int32)
-        for i in xrange(self.mbsz):
+        for i in range(self.mbsz):
             episode = random.randint(max(0, N-50), N-1)
             num_frames = len(self.states[episode])
             frame = random.randint(0, num_frames-1)
@@ -123,7 +123,7 @@ agent = Agent(state_size=env.observation_space.shape,
               number_of_actions=env.action_space.n,
               save_name=env_name)
 
-for e in xrange(num_episodes):
+for e in range(num_episodes):
     observation = env.reset()
     done = False
     agent.new_episode()
@@ -138,8 +138,8 @@ for e in xrange(num_episodes):
         observation, reward, done, info = env.step(action)
         total_cost += agent.observe(reward)
         total_reward += reward
-    print "total reward", total_reward
-    print "mean cost", total_cost/frame
+    print("total reward", total_reward)
+    print("mean cost", total_cost/frame)
 
 
 

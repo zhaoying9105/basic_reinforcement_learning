@@ -8,4 +8,4 @@ while True:
         env.render()
         obs, rew, done, _ = env.step(env.action_space.sample())
         episode_rew += rew
-    print("Episode reward", episode_rew)
+    print(("Episode reward", episode_rew))

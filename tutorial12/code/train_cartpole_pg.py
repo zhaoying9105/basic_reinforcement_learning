@@ -243,7 +243,7 @@ sess.run(tf.initialize_all_variables())
                             # 2. For iteration=1,2,... do
 for i in range(1000):
     reward = run_episode(env, policy_grad, value_grad, sess)
-    print("episode ",i, "reward: ",reward)
+    print(("episode ",i, "reward: ",reward))
     # if reward == 200:
     #     print("reward 200")
     #     print(i)
@@ -255,4 +255,4 @@ t = 0
 for _ in range(1000):
     reward = run_episode(env, policy_grad, value_grad, sess, render=True)
     t += reward
-print(t / 1000)
+print((t / 1000))

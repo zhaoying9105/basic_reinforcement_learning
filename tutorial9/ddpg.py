@@ -100,7 +100,7 @@ class ActorNetwork(object):
 
         # Optimization Op
         self.optimize = tf.train.AdamOptimizer(self.learning_rate).\
-            apply_gradients(zip(self.actor_gradients, self.network_params))
+            apply_gradients(list(zip(self.actor_gradients, self.network_params)))
 
         self.num_trainable_vars = len(
             self.network_params) + len(self.target_network_params)
@@ -268,14 +268,14 @@ def train(sess, env, actor, critic):
     # Initialize replay memory
     replay_buffer = ReplayBuffer(BUFFER_SIZE, RANDOM_SEED)
 
-    for i in xrange(MAX_EPISODES):
+    for i in range(MAX_EPISODES):
 
         s = env.reset()
 
         ep_reward = 0
         ep_ave_max_q = 0
 
-        for j in xrange(MAX_EP_STEPS):
+        for j in range(MAX_EP_STEPS):
 
             if RENDER_ENV:
                 env.render()
@@ -299,7 +299,7 @@ def train(sess, env, actor, critic):
                     s2_batch, actor.predict_target(s2_batch))
 
                 y_i = []
-                for k in xrange(MINIBATCH_SIZE):
+                for k in range(MINIBATCH_SIZE):
                     if t_batch[k]:
                         y_i.append(r_batch[k])
                     else:
@@ -333,8 +333,8 @@ def train(sess, env, actor, critic):
                 writer.add_summary(summary_str, i)
                 writer.flush()
 
-                print '| Reward: %.2i' % int(ep_reward), " | Episode", i, \
-                    '| Qmax: %.4f' % (ep_ave_max_q / float(j))
+                print('| Reward: %.2i' % int(ep_reward), " | Episode", i, \
+                    '| Qmax: %.4f' % (ep_ave_max_q / float(j)))
 
                 break
 

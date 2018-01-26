@@ -63,7 +63,7 @@ class QLearn:
         self.learnQ(state1, action1, reward, reward + self.gamma*maxqnew)
 
 def build_state(features):    
-    return int("".join(map(lambda feature: str(int(feature)), features)))
+    return int("".join([str(int(feature)) for feature in features]))
 
 def to_bin(value, bins):
     return numpy.digitize(x=[value], bins=bins)[0]
@@ -87,10 +87,10 @@ if __name__ == '__main__':
     feature2_bins = pandas.cut([-0.07, 0.07], bins=n_bins, retbins=True)[1][1:-1]
 
     # The Q-learn algorithm
-    qlearn = QLearn(actions=range(env.action_space.n),
+    qlearn = QLearn(actions=list(range(env.action_space.n)),
                     alpha=0.5, gamma=0.90, epsilon=0.1)
 
-    for i_episode in xrange(200):
+    for i_episode in range(200):
         observation = env.reset()
 
         feature1, feature2 = observation            
@@ -100,7 +100,7 @@ if __name__ == '__main__':
         qlearn.epsilon = qlearn.epsilon * 0.999 # added epsilon decay
         cumulated_reward = 0
 
-        for t in xrange(max_number_of_steps):	    	
+        for t in range(max_number_of_steps):	    	
             # env.render()
 
             # Pick an action based on the current state
@@ -116,7 +116,7 @@ if __name__ == '__main__':
 
             # TODO remove
             if reward != -1:
-                print reward
+                print(reward)
 
             qlearn.learn(state, action, reward, nextState)
             state = nextState
@@ -126,7 +126,7 @@ if __name__ == '__main__':
                 last_time_steps = numpy.append(last_time_steps, [int(t + 1)])
                 break
 
-        print("Episode {:d} reward score: {:0.2f}".format(i_episode, cumulated_reward))
+        print(("Episode {:d} reward score: {:0.2f}".format(i_episode, cumulated_reward)))
 
     # env.monitor.close()
     # gym.upload('/tmp/cartpole-experiment-1', algorithm_id='vmayoral simple Q-learning', api_key='your-key')

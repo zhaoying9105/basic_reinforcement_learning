@@ -175,19 +175,19 @@ def testAlgo(init=0):
         state = initGridRand()
 
     print("Initial State:")
-    print(dispGrid(state))
+    print((dispGrid(state)))
     status = 1
     #while game still in progress
     while(status == 1):
         qval = model.predict(state.reshape(1,64), batch_size=1)
         action = (np.argmax(qval)) #take action with highest Q-value
-        print('Move #: %s; Taking action: %s' % (i, action))
+        print(('Move #: %s; Taking action: %s' % (i, action)))
         state = makeMove(state, action)
-        print(dispGrid(state))
+        print((dispGrid(state)))
         reward = getReward(state)
         if reward != -1:
             status = 0
-            print("Reward: %s" % (reward,))
+            print(("Reward: %s" % (reward,)))
             return reward
         i += 1 #If we're taking more than 10 actions, just stop, we probably can't win this game
         if (i > 10):
@@ -272,7 +272,7 @@ for i in range(epochs):
 
             X_train = np.array(X_train)
             y_train = np.array(y_train)
-            print("Game #: %s" % (i,))
+            print(("Game #: %s" % (i,)))
             model.fit(X_train, y_train, batch_size=batchSize, nb_epoch=1, verbose=1)
             state = new_state
         if reward != -1: #if reached terminal state, update game status
@@ -291,7 +291,7 @@ def testResults():
         if result > 0:
             wins += 1
 
-    print("Percentage: "+str(wins/games))
+    print(("Percentage: "+str(wins/games)))
     return wins/games
 
 
@@ -299,4 +299,4 @@ suma = 0
 for i in range(5):
     result = testResults()
     suma += result
-    print("final: "+str(suma/5))
+    print(("final: "+str(suma/5)))

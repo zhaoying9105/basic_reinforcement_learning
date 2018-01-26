@@ -23,7 +23,7 @@ PS3_BUTTON = {
     'pairing': 16,
 }
 #INVERTED_PS3_BUTTON = {value: key for key, value in PS3_BUTTON.iteritems()}
-INVERTED_PS3_BUTTON = {value: key for key, value in PS3_BUTTON.items()}
+INVERTED_PS3_BUTTON = {value: key for key, value in list(PS3_BUTTON.items())}
 
 # Mappings from PS3 axes to their corresponding array indices.
 PS3_AXIS = {
@@ -49,4 +49,4 @@ PS3_AXIS = {
     'gyro_yaw': 19,
 }
 #INVERTED_PS3_AXIS = {value: key for key, value in PS3_AXIS.iteritems()}
-INVERTED_PS3_AXIS = {value: key for key, value in PS3_AXIS.items()}
+INVERTED_PS3_AXIS = {value: key for key, value in list(PS3_AXIS.items())}

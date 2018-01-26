@@ -163,4 +163,4 @@ def dispGrid(state):
     return grid
 
 state = initGridRand()
-print(dispGrid(state))
+print((dispGrid(state)))

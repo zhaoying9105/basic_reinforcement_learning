@@ -15,7 +15,7 @@ class QLearn:
 
     def learn(self, state, action, reward, state2):
 
-        if self.q.has_key((state, action)) == False:
+        if ((state, action) in self.q) == False:
             update = reward
             self.q[(state, action)] = update
 

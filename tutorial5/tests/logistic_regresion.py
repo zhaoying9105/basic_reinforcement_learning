@@ -25,8 +25,8 @@ w = theano.shared(rng.randn(feats), name="w")
 b = theano.shared(0., name="b")
 
 print("Initial model:")
-print(w.get_value())
-print(b.get_value())
+print((w.get_value()))
+print((b.get_value()))
 
 # Construct Theano expression graph
 p_1 = 1 / (1 + T.exp(-T.dot(x, w) - b))   # Probability that target = 1
@@ -51,9 +51,9 @@ for i in range(training_steps):
     pred, err = train(D[0], D[1])
 
 print("Final model:")
-print(w.get_value())
-print(b.get_value())
+print((w.get_value()))
+print((b.get_value()))
 print("target values for D:")
-print(D[1])
+print((D[1]))
 print("prediction on D:")
-print(predict(D[0]))
+print((predict(D[0])))

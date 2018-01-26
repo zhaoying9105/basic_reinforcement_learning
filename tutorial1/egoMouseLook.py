@@ -5,10 +5,11 @@ import shelve
 import pdb
 
 import cellular
-reload(cellular)
+import imp
+imp.reload(cellular)
 import qlearn_mod_random as qlearn # to use the alternative exploration method
 #import qlearn # to use standard exploration method
-reload(qlearn)
+imp.reload(qlearn)
 
 directions = 8
 
@@ -69,7 +70,7 @@ class Mouse(cellular.Agent):
 
     def __init__(self):
         self.ai = None
-        self.ai = qlearn.QLearn(actions=range(directions),
+        self.ai = qlearn.QLearn(actions=list(range(directions)),
                                 alpha=0.1, gamma=0.9, epsilon=0.1)
         self.eaten = 0
         self.fed = 0
@@ -150,8 +151,8 @@ while world.age < endAge:
                             epsilonm*(world.age - epsilonx[0]) + epsilony[0])'''
 
     if world.age % 10000 == 0:
-        print "{:d}, e: {:0.2f}, W: {:d}, L: {:d}"\
-            .format(world.age, mouse.ai.epsilon, mouse.fed, mouse.eaten)
+        print("{:d}, e: {:0.2f}, W: {:d}, L: {:d}"\
+            .format(world.age, mouse.ai.epsilon, mouse.fed, mouse.eaten))
         mouse.eaten = 0
         mouse.fed = 0
 
@@ -159,8 +160,8 @@ world.display.activate(size=30)
 world.display.delay = 1
 while 1:
     world.update(mouse.fed, mouse.eaten)
-    print len(mouse.ai.q) # print the amount of state/action, reward 
+    print(len(mouse.ai.q)) # print the amount of state/action, reward 
                           # elements stored
     import sys
     bytes = sys.getsizeof(mouse.ai.q)
-    print "Bytes: {:d} ({:d} KB)".format(bytes, bytes/1024)
+    print("Bytes: {:d} ({:d} KB)".format(bytes, bytes/1024))

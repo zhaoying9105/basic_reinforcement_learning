@@ -9,6 +9,7 @@ import gym
 import numpy
 import random
 import pandas
+from functools import reduce
 
 class QLearn:
     def __init__(self, actions, epsilon, alpha, gamma):
@@ -61,7 +62,7 @@ class QLearn:
         self.learnQ(state1, action1, reward, reward + self.gamma*maxqnew)
 
 def build_state(features):    
-    return int("".join(map(lambda feature: str(int(feature)), features)))
+    return int("".join([str(int(feature)) for feature in features]))
 
 def to_bin(value, bins):
     return numpy.digitize(x=[value], bins=bins)[0]
@@ -88,10 +89,10 @@ if __name__ == '__main__':
     angle_rate_bins = pandas.cut([-3.5, 3.5], bins=n_bins_angle, retbins=True)[1][1:-1]
 
     # The Q-learn algorithm
-    qlearn = QLearn(actions=range(env.action_space.n),
+    qlearn = QLearn(actions=list(range(env.action_space.n)),
                     alpha=0.5, gamma=0.90, epsilon=0.1)
 
-    for i_episode in xrange(3000):
+    for i_episode in range(3000):
         observation = env.reset()
 
         cart_position, pole_angle, cart_velocity, angle_rate_of_change = observation            
@@ -100,7 +101,7 @@ if __name__ == '__main__':
                          to_bin(cart_velocity, cart_velocity_bins),
                          to_bin(angle_rate_of_change, angle_rate_bins)])
 
-        for t in xrange(max_number_of_steps):	    	
+        for t in range(max_number_of_steps):	    	
             # env.render()
 
             # Pick an action based on the current state
@@ -127,8 +128,8 @@ if __name__ == '__main__':
 
     l = last_time_steps.tolist()
     l.sort()
-    print("Overall score: {:0.2f}".format(last_time_steps.mean()))
-    print("Best 100 score: {:0.2f}".format(reduce(lambda x, y: x + y, l[-100:]) / len(l[-100:])))
+    print(("Overall score: {:0.2f}".format(last_time_steps.mean())))
+    print(("Best 100 score: {:0.2f}".format(reduce(lambda x, y: x + y, l[-100:]) / len(l[-100:]))))
 
     env.monitor.close()
     # gym.upload('/tmp/cartpole-experiment-1', algorithm_id='vmayoral simple Q-learning', api_key='your-key')

@@ -393,8 +393,8 @@ class GPSTrainingGUI(object):
 
         # Linear Gaussian Controller Distributions (Red)
         #type(mu_eept.shape[1])
-        print(mu_eept.shape[1])
-        print(mu_eept.shape[1]//3)
+        print((mu_eept.shape[1]))
+        print((mu_eept.shape[1]//3))
         for i in range(mu_eept.shape[1]//3):
             mu, sigma = mu_eept[:, 3*i+0:3*i+3], sigma_eept[:, 3*i+0:3*i+3, 3*i+0:3*i+3]
             self._traj_visualizer.plot_3d_gaussian(i=m, mu=mu, sigma=sigma,

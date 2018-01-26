@@ -3,7 +3,7 @@ from baselines import deepq
 
 env = gym.make("MountainCar-v0")
 # env = gym.make("MountainCarContinuous-v0")
-print(env.action_space.n)
+print((env.action_space.n))
 # Enabling layer_norm here is import for parameter space noise!
 model = deepq.models.mlp([64], layer_norm=True)
 act = deepq.learn(

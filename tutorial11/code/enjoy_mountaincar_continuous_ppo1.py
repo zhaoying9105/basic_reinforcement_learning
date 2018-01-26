@@ -28,4 +28,4 @@ while True:
         env.render()
         obs, rew, done, _ = env.step(pi.act(True, obs)[0])
         episode_rew += rew
-    print("Episode reward", episode_rew)
+    print(("Episode reward", episode_rew))

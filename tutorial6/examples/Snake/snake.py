@@ -65,7 +65,7 @@ def game(snake_length=3):
         if not step_size:
             action = actions[0]  # Repeat last action
         elif step_size > 1:
-            raise ValueError, 'Cannot move more than 1 unit at a time'
+            raise ValueError('Cannot move more than 1 unit at a time')
 
         actions.insert(0, action)
         actions.pop()
@@ -121,11 +121,11 @@ model.add(Dense(nb_actions))
 model.compile(RMSprop(), 'MSE')
 
 exp_replay = experience_replay(batch_size)
-exp_replay.next()  # Start experience replay coroutine
+next(exp_replay)  # Start experience replay coroutine
 
-for i in xrange(nb_epochs):
+for i in range(nb_epochs):
     g = game()
-    screen, _ = g.next()
+    screen, _ = next(g)
     S = np.asarray([screen] * nb_frames)
     try:
         # Decrease epsilon over the first half of training
@@ -171,7 +171,7 @@ for i in xrange(nb_epochs):
        pass
 
     if (i + 1) % 100 == 0:
-        print 'Epoch %6i/%i, loss: %.6f, epsilon: %.3f' % (i + 1, nb_epochs, loss, epsilon)
+        print('Epoch %6i/%i, loss: %.6f, epsilon: %.3f' % (i + 1, nb_epochs, loss, epsilon))
 
 
 def save_img():
@@ -181,22 +181,22 @@ def save_img():
     while True:
         screen = (yield)
         plt.imshow(screen, interpolation='none')
-        plt.savefig('images/%04i.png' % (frame_cnt.next(), ))
+        plt.savefig('images/%04i.png' % (next(frame_cnt), ))
     
 
 img_saver = save_img()
-img_saver.next()
+next(img_saver)
 
 game_cnt = it.count(1)
-for _ in xrange(10):
+for _ in range(10):
     g = game()
-    screen, _ = g.next()
+    screen, _ = next(g)
     img_saver.send(screen)
     frame_cnt = it.count()
     try:
         S = np.asarray([screen] * nb_frames)
         while True:
-            frame_cnt.next()
+            next(frame_cnt)
             ix = np.argmax(model.predict(S[np.newaxis]), axis=-1)[0]
             screen, _ = g.send(all_possible_actions[ix])
             S[1:] = S[:-1]
@@ -204,7 +204,7 @@ for _ in xrange(10):
             img_saver.send(screen)
             
     except StopIteration:
-        print 'Saved %3i frames for game %3i' % (frame_cnt.next(), game_cnt.next())
+        print('Saved %3i frames for game %3i' % (next(frame_cnt), next(game_cnt)))
 
 img_saver.close()
 

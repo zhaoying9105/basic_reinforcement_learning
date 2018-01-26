@@ -179,7 +179,7 @@ class DeepQ:
         i = 0
         for layer in self.model.layers:
             weights = layer.get_weights()
-            print "layer ",i,": ",weights
+            print("layer ",i,": ",weights)
             i += 1
 
 
@@ -330,11 +330,11 @@ deepQ.initNetworks([30,30])
 stepCounter = 0
 
 # number of reruns
-for epoch in xrange(epochs):
+for epoch in range(epochs):
     observation = env.reset()
-    print explorationRate
+    print(explorationRate)
     # number of timesteps
-    for t in xrange(steps):
+    for t in range(steps):
         env.render()
         qValues = deepQ.getQValues(observation)
 
@@ -343,12 +343,12 @@ for epoch in xrange(epochs):
         newObservation, reward, done, info = env.step(action)
 
         if (t >= 199):
-            print "Failed. Time out"
+            print("Failed. Time out")
             done = True
             # reward = 200            
 
         if done and t < 199:
-            print "Sucess!"
+            print("Sucess!")
             # reward -= 200
         deepQ.addMemory(observation, action, reward, newObservation, done)
 
@@ -367,15 +367,15 @@ for epoch in xrange(epochs):
                 last100Filled = True
                 last100ScoresIndex = 0
             if not last100Filled:
-                print "Episode ",epoch," finished after {} timesteps".format(t+1)
+                print("Episode ",epoch," finished after {} timesteps".format(t+1))
             else :
-                print "Episode ",epoch," finished after {} timesteps".format(t+1)," last 100 average: ",(sum(last100Scores)/len(last100Scores))
+                print("Episode ",epoch," finished after {} timesteps".format(t+1)," last 100 average: ",(sum(last100Scores)/len(last100Scores)))
             break
 
         stepCounter += 1
         if stepCounter % updateTargetNetwork == 0:
             deepQ.updateTargetNetwork()
-            print "updating target network"
+            print("updating target network")
 
     explorationRate *= 0.995
     # explorationRate -= (2.0/epochs)

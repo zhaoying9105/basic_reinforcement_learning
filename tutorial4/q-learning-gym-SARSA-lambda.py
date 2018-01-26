@@ -34,8 +34,8 @@ def main():
     epsilon = initial_epsilon
     theta = np.zeros(N) # parameters (memory)
 
-    for episode_num in xrange(100):
-        print episode_num, episode(epsilon, theta, env.spec.timestep_limit)
+    for episode_num in range(100):
+        print(episode_num, episode(epsilon, theta, env.spec.timestep_limit))
         epsilon = epsilon * 0.999 # added epsilon decay
 
     # env.monitor.close()
@@ -54,13 +54,13 @@ def episode(epsilon, theta, max_steps):
                 range_ = 1
             state_vars.append(var / range_ * NUM_TILES)
 
-        for a in xrange(M):
+        for a in range(M):
             F[a] = get_tiles(NUM_TILINGS, state_vars, N, a)
 
     def load_Q():
-        for a in xrange(M):
+        for a in range(M):
             Q[a] = 0
-            for j in xrange(NUM_TILINGS):
+            for j in range(NUM_TILINGS):
                 Q[a] += theta[F[a,j]]
 
     observation = env.reset()
@@ -75,12 +75,12 @@ def episode(epsilon, theta, max_steps):
         step += 1
 
         e *= gamma * lambda_
-        for a in xrange(M):
+        for a in range(M):
             v = 0.0
             if a == action:
                 v = 1.0
 
-            for j in xrange(NUM_TILINGS):
+            for j in range(NUM_TILINGS):
                 e[F[a,j]] = v
 
         observation, reward, done, info = env.step(action)
@@ -102,19 +102,19 @@ def episode(epsilon, theta, max_steps):
 # translated from https://web.archive.org/web/20030618225322/http://envy.cs.umass.edu/~rich/tiles.html
 def get_tiles(num_tilings, variables, memory_size, hash_value):
     num_coordinates = len(variables) + 2
-    coordinates = [0 for i in xrange(num_coordinates)]
+    coordinates = [0 for i in range(num_coordinates)]
     coordinates[-1] = hash_value
 
-    qstate = [0 for i in xrange(len(variables))]
-    base = [0 for i in xrange(len(variables))]
-    tiles = [0 for i in xrange(num_tilings)]
+    qstate = [0 for i in range(len(variables))]
+    base = [0 for i in range(len(variables))]
+    tiles = [0 for i in range(num_tilings)]
 
     for i, variable in enumerate(variables):
         qstate[i] = int(math.floor(variable * num_tilings))
         base[i] = 0
 
-    for j in xrange(num_tilings):
-        for i in xrange(len(variables)):
+    for j in range(num_tilings):
+        for i in range(len(variables)):
             if (qstate[i] >= base[i]):
                 coordinates[i] = qstate[i] - ((qstate[i] - base[i]) % num_tilings)
             else:

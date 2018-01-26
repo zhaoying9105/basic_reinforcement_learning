@@ -1,2 +1,2 @@
 from gym import envs
-print len(envs.registry.all())
+print(len(envs.registry.all()))

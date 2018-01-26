@@ -7,6 +7,7 @@ import gym
 import numpy
 import random
 import pandas
+from functools import reduce
 
 if __name__ == '__main__':
     env = gym.make('Breakout-v0')
@@ -35,10 +36,10 @@ if __name__ == '__main__':
 
     done = False
     observation = env.reset()
-    for i_episode in xrange(30):
+    for i_episode in range(30):
         if done:
             observation = env.reset()
-        for t in xrange(max_number_of_steps):
+        for t in range(max_number_of_steps):
             env.render()
             # Execute the action and get feedback
             observation, reward, done, info = env.step(env.action_space.sample())
@@ -48,8 +49,8 @@ if __name__ == '__main__':
 
     l = last_time_steps.tolist()
     l.sort()
-    print("Overall score: {:0.2f}".format(last_time_steps.mean()))
-    print("Best 100 score: {:0.2f}".format(reduce(lambda x, y: x + y, l[-100:]) / len(l[-100:])))
+    print(("Overall score: {:0.2f}".format(last_time_steps.mean())))
+    print(("Best 100 score: {:0.2f}".format(reduce(lambda x, y: x + y, l[-100:]) / len(l[-100:]))))
 
     env.monitor.close()
     # gym.upload('/tmp/cartpole-experiment-1', algorithm_id='vmayoral simple Q-learning', api_key='your-key')

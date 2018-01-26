@@ -890,8 +890,8 @@ class MyQNetwork(QNetwork):
             self.states_shared.append(theano.shared(np.zeros((batch_size,) + dim, dtype=theano.config.floatX) , borrow=False))
             self.next_states_shared.append(theano.shared(np.zeros((batch_size,) + dim, dtype=theano.config.floatX) , borrow=False))
         
-        print("Number of observations per state: {}".format(len(self.states_shared)))
-        print("For each observation, historySize + ponctualObs_i.shape: {}".format(self._input_dimensions))
+        print(("Number of observations per state: {}".format(len(self.states_shared))))
+        print(("For each observation, historySize + ponctualObs_i.shape: {}".format(self._input_dimensions)))
                 
         rewards = T.col('rewards')
         actions = T.icol('actions')
@@ -902,7 +902,7 @@ class MyQNetwork(QNetwork):
         Q_net=neural_network(self._batch_size, self._input_dimensions, self._n_actions, self._random_state)
         self.q_vals, self.params, shape_after_conv = Q_net._buildDQN(states)
         
-        print("Number of neurons after spatial and temporal convolution layers: {}".format(shape_after_conv))
+        print(("Number of neurons after spatial and temporal convolution layers: {}".format(shape_after_conv)))
 
         self.next_q_vals, self.next_params, shape_after_conv = Q_net._buildDQN(next_states)
         self._resetQHat()

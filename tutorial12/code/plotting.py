@@ -30,10 +30,10 @@ def plot_value_function(V, title="Value Function"):
     """
     Plots the value function as a surface plot.
     """
-    min_x = min(k[0] for k in V.keys())
-    max_x = max(k[0] for k in V.keys())
-    min_y = min(k[1] for k in V.keys())
-    max_y = max(k[1] for k in V.keys())
+    min_x = min(k[0] for k in list(V.keys()))
+    max_x = max(k[0] for k in list(V.keys()))
+    min_y = min(k[1] for k in list(V.keys()))
+    max_y = max(k[1] for k in list(V.keys()))
 
     x_range = np.arange(min_x, max_x + 1)
     y_range = np.arange(min_y, max_y + 1)

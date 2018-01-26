@@ -5,7 +5,7 @@ Gets to 98.40% test accuracy after 20 epochs
 2 seconds per epoch on a K520 GPU.
 '''
 
-from __future__ import print_function
+
 import numpy as np
 np.random.seed(1337)  # for reproducibility
 

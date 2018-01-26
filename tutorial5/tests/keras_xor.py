@@ -39,4 +39,4 @@ model.compile(loss='mse', optimizer=sgd, class_mode="binary")
 
 history = model.fit(X, y, nb_epoch=1000, batch_size=4, verbose=1)
 
-print model.predict(X)
+print(model.predict(X))

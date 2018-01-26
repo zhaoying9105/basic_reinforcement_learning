@@ -35,7 +35,7 @@ class Cell(cellular.Cell):
 
 class Agent(cellular.Agent):
     def __init__(self):
-        self.actions = range(directions)
+        self.actions = list(range(directions))
         self.egoAI = qlearn.QLearn(
             actions=self.actions, epsilon=0.05, alpha=0.1, gamma=.05)
         self.lastAction = None
@@ -121,7 +121,7 @@ directions = 4
 world = cellular.World(Cell, directions=directions, filename='../../worlds/cliffs.txt')
 
 if startCell is None:
-    print "You must indicate where the agent starts by putting a 'S' in the map file"
+    print("You must indicate where the agent starts by putting a 'S' in the map file")
     sys.exit()
 agent = Agent()
 world.addAgent(agent, cell=startCell)
@@ -129,20 +129,20 @@ world.addAgent(agent, cell=startCell)
 pretraining = 10000
 for i in range(pretraining):
     if i % 1000 == 0:
-        print i, agent.score
+        print(i, agent.score)
         agent.score = 0
     world.update()
 
 ### display
-print cellular.Display
+print(cellular.Display)
 world.display.activate(size=30)
 world.display.delay = 1
 while 1:
     world.update()
 
     if world.age % 10000 == 0:
-        print "{:d}, W: {:d}, L: {:d}, A: {:d}"\
-            .format(world.age, agent.score, agent.intentional_deaths, agent.unintentional_deaths)
+        print("{:d}, W: {:d}, L: {:d}, A: {:d}"\
+            .format(world.age, agent.score, agent.intentional_deaths, agent.unintentional_deaths))
         agent.score = 0
         agent.intentional_deaths = 0
         agent.unintentional_deaths = 0

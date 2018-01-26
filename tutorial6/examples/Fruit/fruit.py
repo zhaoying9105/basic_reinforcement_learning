@@ -26,7 +26,7 @@ def episode():
         # Draw the fruit in the screen
         X[y, x] = 1.
         # Draw the basket
-        bar = range(x_basket - 1, x_basket + 2)
+        bar = list(range(x_basket - 1, x_basket + 2))
         X[-1, bar] = 1.
         
         # End of game is known when fruit is at penultimate line of grid.
@@ -90,11 +90,11 @@ model.summary()
 # model.load_weights('model.h5')
 
 exp_replay = experience_replay(batch_size)
-exp_replay.next()  # Start experience-replay coroutine
+next(exp_replay)  # Start experience-replay coroutine
 
-for i in xrange(nb_epochs):
+for i in range(nb_epochs):
     ep = episode()
-    S, reward = ep.next()  # Start coroutine of single entire episode
+    S, reward = next(ep)  # Start coroutine of single entire episode
     loss = 0.
     try:
         while True:
@@ -130,14 +130,14 @@ for i in xrange(nb_epochs):
         pass
     
     # if (i + 1) % 100 == 0:
-    print 'Epoch %i, loss: %.6f' % (i + 1, loss)
+    print('Epoch %i, loss: %.6f' % (i + 1, loss))
 
 #################
 # SAVE THE MODEL
 #################
 # Save trained model weights and architecture, this will be used by the visualization code
 model_name = "model.h5"
-print("Saving the model to "+model_name)
+print(("Saving the model to "+model_name))
 json_string = model.to_json()
 open('model.json', 'w').write(json_string)
 model.save_weights(model_name)    
@@ -146,11 +146,11 @@ model.save_weights(model_name)
 # TEST
 #################
 img_saver = save_img()
-img_saver.next()
+next(img_saver)
 
-for _ in xrange(10):
+for _ in range(10):
     g = episode()
-    S, _ = g.next()
+    S, _ = next(g)
     img_saver.send(S)
     try:
         while True:

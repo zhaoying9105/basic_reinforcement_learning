@@ -126,7 +126,7 @@ class Evolution:
         self.agents = [None] * nr_agents
         self.hiddenLayers = hiddenLayers
 
-        for i in xrange(self.nr_agents):
+        for i in range(self.nr_agents):
             agent = Agent()
             model = self.createModel(self.input_size, self.output_size, hiddenLayers, "relu")
             agent.setNetwork(model)
@@ -251,7 +251,7 @@ class Evolution:
         """
         observation = env.reset()
         totalReward = 0
-        for t in xrange(steps):
+        for t in range(steps):
             if (render):
                 env.render()
             values = self.getValues(observation, agent)
@@ -285,11 +285,11 @@ class Evolution:
                     for value in weight:
                         unrolled.append(value)
             i += 1
-        print new_weights
+        print(new_weights)
 
     def createWeightLayerList(self):
         weightLayerList = []
-        for i in xrange(len(self.hiddenLayers)):
+        for i in range(len(self.hiddenLayers)):
             weightLayerList.append(i * 2)
         return weightLayerList
 
@@ -298,7 +298,7 @@ class Evolution:
         agent2_weights = agent2.network.get_weights()
         for i in self.createWeightLayerList():
             layer2 = agent2_weights[i]
-            for j in xrange(len(layer2)):
+            for j in range(len(layer2)):
                 rand = random.random()
                 if (rand < 0.5):
                     new_weights[i][j] = layer2[j]
@@ -312,9 +312,9 @@ class Evolution:
         new_weights = agent1.network.get_weights()
         for i in self.createWeightLayerList():
             layer = new_weights[i]
-            for j in xrange(len(layer)):
+            for j in range(len(layer)):
                 neuronConnectionGroup = layer[j]
-                for k in xrange(len(neuronConnectionGroup)):
+                for k in range(len(neuronConnectionGroup)):
                     weight = neuronConnectionGroup[k]
                     rand = random.random()
                     if (rand < 0.1):
@@ -329,7 +329,7 @@ class Evolution:
         return selectedAgents
 
     def createNewPopulation(self, bestAgents):
-        print "create new pop"
+        print("create new pop")
         newPopulation = bestAgents
         while len(newPopulation) < self.nr_agents:
             rand = random.random()
@@ -352,7 +352,7 @@ class Evolution:
 
     def tryAgent(self, agent, nr_episodes):
         total = 0
-        for i in xrange(nr_episodes):
+        for i in range(nr_episodes):
             total += self.run_simulation(self.env, agent, self.steps)
         return total / nr_episodes
 
@@ -366,19 +366,19 @@ class Evolution:
         finishes when the best agent (computed over 100 episodes), obtains
         the maximum score (defined by self.scoreTarget).
         """
-        for e in xrange(self.epochs):
+        for e in range(self.epochs):
             self.updateFitnessValuesForEpoch()
             averageFitness = self.calculateAverageFitness()
-            print "Epoch",e,"average fitness: ",averageFitness
+            print("Epoch",e,"average fitness: ",averageFitness)
             bestAgents = self.selectBest()
             bestAgentAverage = self.tryAgent(bestAgents[0] , 100)
             if bestAgentAverage >= self.scoreTarget:
-                print("bestAgentAverage: "+str(bestAgentAverage)+" >= self.scoreTarget "+str(self.scoreTarget))
+                print(("bestAgentAverage: "+str(bestAgentAverage)+" >= self.scoreTarget "+str(self.scoreTarget)))
                 self.run_simulation(self.env, bestAgents[0] , self.steps*5, render = True)
                 print("Finishing")
                 break
             else:
-                print "Best agent average: ",bestAgentAverage
+                print("Best agent average: ",bestAgentAverage)
             bestAgents[0].setFitness(bestAgentAverage)
             # self.run_simulation(self.env, bestAgents[0] , self.steps, render = True)
             self.createNewPopulation(bestAgents)
@@ -402,8 +402,8 @@ class Evolution:
         No learning happens in this step.
         """        
         agentScores = [0] * self.nr_agents
-        for r in xrange(self.nr_rounds_per_epoch):
-            for a in xrange(self.nr_agents):
+        for r in range(self.nr_rounds_per_epoch):
+            for a in range(self.nr_agents):
                 agent = self.agents[a]
                 score = self.run_simulation(self.env, agent , self.steps)
                 agentScores[a] += score
